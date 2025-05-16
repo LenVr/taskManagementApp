@@ -1,14 +1,38 @@
 "use client";
 
-import "../firebase/firebase"
+import { db } from "@/firebase/firebase"
 import styles from "./page.module.css";
 import Link from "next/link";
 import useFirebaseAuth from "@/hooks/firebaseAuth";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { collection, getDocs, query } from "firebase/firestore";
+import TaskCard from "@/components/taskCards/taskCard";
 
 export default function Home() {
   const user = useFirebaseAuth();
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    if (!user) return;
+    const fetchTasks = async () => {
+      try {
+        const q = query(
+          collection(db, "tasks")
+        );
+        const querySnapshot = await getDocs(q);
+        const tasksData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setTasks(tasksData);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+    fetchTasks();
+  }, [user]);
 
   const handleGoogleSignIn = async () => {
     const auth = getAuth();
@@ -42,7 +66,15 @@ export default function Home() {
         </div>
       ) : (
         <div className={styles.mainContainer}>
-          <p>Hi! {user.displayName || user.email}</p>
+          <div className={styles.tasksContainer}>
+            {tasks.length === 0 ? (
+              <p>No tasks found.</p>
+            ) : (
+              tasks.map(task => (
+                <TaskCard key={task.id} task={task} />
+              ))
+            )}
+          </div>
         </div>
       )}
     </section>

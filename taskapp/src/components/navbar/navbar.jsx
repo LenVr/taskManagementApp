@@ -14,8 +14,10 @@ function Navbar() {
     const pathName = usePathname();
     const user = useFirebaseAuth();
 
+    const userName = user?.displayName || user?.email || 'User';
+
     const navItems = [
-        { path: '/user-profile', label: 'My profile' },
+        { path: '/user-profile', label: userName },
     ];
 
     const handleLogout = async () => {
