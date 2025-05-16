@@ -6,8 +6,8 @@ import styles from './navbar.module.css';
 import { usePathname } from 'next/navigation';
 import useFirebaseAuth from '@/hooks/firebaseAuth';
 import { getAuth, signOut } from "firebase/auth";
-
 import { IoLogOut } from "react-icons/io5";
+import { PiKeyReturn } from "react-icons/pi";
 
 function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -16,7 +16,6 @@ function Navbar() {
 
     const navItems = [
         { path: '/user-profile', label: 'My profile' },
-        { path: '/settings', label: 'Settings' },
     ];
 
     const handleLogout = async () => {
@@ -30,7 +29,7 @@ function Navbar() {
 
     return (
         <div>
-            {user && (
+            {user ? (
                 <div className={styles.topnav}>
                     <ul className={`${styles.navLinks} ${menuOpen ? styles.showMenu : ''}`}>
                         {navItems.map((item) => (
@@ -51,12 +50,23 @@ function Navbar() {
                     </ul>
                     <div className={styles.logOutBtnContainer}>
                         <IoLogOut
-                            className={styles.logOutBtn}
+                            className={styles.iconBtn}
                             onClick={handleLogout}
-                            style={{ cursor: "pointer" }}
                             title="Logout"
                         />
                     </div>
+                </div>
+            ) : (
+                <div className={styles.topnav}>
+                    <ul className={`${styles.navLinks} ${menuOpen ? styles.showMenu : ''}`}>
+                        {(pathName === '/login' || pathName === '/register') && (
+                            <li>
+                                <Link href="/" onClick={() => setMenuOpen(false)}>
+                                    <PiKeyReturn className={styles.iconBtn} title="Back" />
+                                </Link>
+                            </li>
+                        )}
+                    </ul>
                 </div>
             )}
         </div>

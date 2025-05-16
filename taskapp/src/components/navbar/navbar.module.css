@@ -20,11 +20,11 @@
     align-items: center;
 }
 
-.logOutBtn {
+.iconBtn {
     font-size: 2em;
 }
 
-.logOutBtn:hover {
+.iconBtn:hover {
     cursor: pointer;
 }
 

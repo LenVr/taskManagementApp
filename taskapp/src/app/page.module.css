@@ -9,10 +9,14 @@
     gap: 15px;
 }
 
+.mainTitle {
+    font-weight: bold;
+    margin-bottom: 4vh;
+}
+
 .btnsContainer {
 
     width: auto;
-    height: 20%;
 
     display: flex;
     align-items: center;
@@ -37,4 +41,34 @@
 
 .btn:hover {
     transform: scale(1.09);
+}
+
+.googleBtn {
+    width: 11vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+    cursor: pointer;
+    color: white;
+    border: 2px solid white;
+    background-color: transparent;
+
+    font-weight: bold;
+    transition: transform 0.2s ease-in;
+}
+
+.googleBtn:hover {
+    transform: scale(1.09);
+}
+
+
+.googleBtnLogo {
+    width: 3vw;
+    height: 100%;
+    margin-right: 12px;
+
+    border-radius: 4px 0px 0px 4px;
+    object-fit: cover;
 }
