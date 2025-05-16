@@ -20,7 +20,7 @@ export default function Home() {
         </div>
       ) : (
         <div className={styles.mainContainer}>
-          <p>Hola {user.displayName || user.email}</p>
+          <p>Hi! {user.displayName || user.email}</p>
         </div>
       )}
     </section>

@@ -14,6 +14,20 @@
     z-index: 1000;
 }
 
+.logOutBtnContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logOutBtn {
+    font-size: 2em;
+}
+
+.logOutBtn:hover {
+    cursor: pointer;
+}
+
 .navLinks {
     display: flex;
     list-style: none;

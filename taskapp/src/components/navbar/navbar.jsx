@@ -5,6 +5,9 @@ import React, { useState } from 'react';
 import styles from './navbar.module.css';
 import { usePathname } from 'next/navigation';
 import useFirebaseAuth from '@/hooks/firebaseAuth';
+import { getAuth, signOut } from "firebase/auth";
+
+import { IoLogOut } from "react-icons/io5";
 
 function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -16,33 +19,45 @@ function Navbar() {
         { path: '/settings', label: 'Settings' },
     ];
 
+    const handleLogout = async () => {
+        const auth = getAuth();
+        try {
+            await signOut(auth);
+        } catch (error) {
+            console.error("Error signing out:", error);
+        }
+    };
+
     return (
-        <div className={styles.topnav}>
-            <button
-                className={styles.hamburger}
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="Toggle navigation"
-            >
-                ☰
-            </button>
+        <div>
             {user && (
-                <ul className={`${styles.navLinks} ${menuOpen ? styles.showMenu : ''}`}>
-                    {navItems.map((item) => (
-                        <li key={item.path}>
-                            <Link
-                                href={item.path}
-                                className={
-                                    pathName === item.path
-                                        ? styles.navbarLinkSelected
-                                        : styles.navbarLink
-                                }
-                                onClick={() => setMenuOpen(false)}
-                            >
-                                {item.label}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+                <div className={styles.topnav}>
+                    <ul className={`${styles.navLinks} ${menuOpen ? styles.showMenu : ''}`}>
+                        {navItems.map((item) => (
+                            <li key={item.path}>
+                                <Link
+                                    href={item.path}
+                                    className={
+                                        pathName === item.path
+                                            ? styles.navbarLinkSelected
+                                            : styles.navbarLink
+                                    }
+                                    onClick={() => setMenuOpen(false)}
+                                >
+                                    {item.label}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                    <div className={styles.logOutBtnContainer}>
+                        <IoLogOut
+                            className={styles.logOutBtn}
+                            onClick={handleLogout}
+                            style={{ cursor: "pointer" }}
+                            title="Logout"
+                        />
+                    </div>
+                </div>
             )}
         </div>
     );

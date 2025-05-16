@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import styles from "./authForm.module.css";
 
 export default function AuthForm() {
     const [form, setForm] = useState({ email: "", password: "", name: "" });
@@ -42,44 +43,46 @@ export default function AuthForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>{isRegister ? "Register" : "Login"}</h2>
-            {isRegister && (
+        <div className={styles.formContainer}>
+            <form className={styles.authForm} onSubmit={handleSubmit}>
+                <h2>{isRegister ? "Register" : "Login"}</h2>
+                {isRegister && (
+                    <div>
+                        <label>Name</label>
+                        <input
+                            name="name"
+                            type="text"
+                            value={form.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                )}
                 <div>
-                    <label>Name</label>
+                    <label>Email</label>
                     <input
-                        name="name"
-                        type="text"
-                        value={form.name}
+                        name="email"
+                        type="email"
+                        value={form.email}
                         onChange={handleChange}
                         required
                     />
                 </div>
-            )}
-            <div>
-                <label>Email</label>
-                <input
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div>
-                <label>Password</label>
-                <input
-                    name="password"
-                    type="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <button type="submit" disabled={loading}>
-                {loading ? "Loading..." : isRegister ? "Register" : "Login"}
-            </button>
-        </form>
+                <div>
+                    <label>Password</label>
+                    <input
+                        name="password"
+                        type="password"
+                        value={form.password}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                <button type="submit" disabled={loading}>
+                    {loading ? "Loading..." : isRegister ? "Register" : "Login"}
+                </button>
+            </form>
+        </div>
     );
 }
