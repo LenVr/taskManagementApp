@@ -1,0 +1,56 @@
+.topnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background: linear-gradient(60deg, #01192b 60%, #3b556b 100%);
+    color: white;
+    gap: 8px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4.5vh;
+    z-index: 1000;
+}
+
+.navLinks {
+    display: flex;
+    list-style: none;
+    gap: 16px;
+}
+
+.navbarLink {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+    margin: 1.6vw;
+    font-size: clamp(0.8vw, 16px, 1.6vw);
+}
+
+.navbarLinkSelected {
+    color: #8CB7C0;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+    margin: 1.6vw;
+    font-size: clamp(0.8vw, 16px, 1.6vw);
+}
+
+.hamburger {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    display: none;
+}
+
+.hamburger:hover {
+    background: none;
+}
+
+.hamburger:hover {
+    outline: none;
+}
